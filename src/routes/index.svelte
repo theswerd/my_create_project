@@ -2,7 +2,6 @@
 	import DataTable from '../components/data_table.svelte';
 	import { writable } from 'svelte/store';
 	import type { person, classroom, class_people } from '../schema';
-	import Layout from './__layout.svelte';
 	let class_name = '';
 	let class_desc = '';
 

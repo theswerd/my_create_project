@@ -5,10 +5,13 @@
 
 	export let row: Row;
 	export let columns: Column[];
-	export let remove: () => void;
 
 	let values = row.values;
 	let editing = row.editing;
+
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	let toggle_editing_state = () => {
 		editing = !editing;
@@ -34,9 +37,13 @@
 		</td>
 	{/each}
 	<td>
-		<slot name="delete_button" {remove}>
-			<button on:click={remove}>Remove</button>
-		</slot>
+		<!-- <slot name="delete_button" remove={() => dispatch('remove')}> -->
+			<button
+				on:click={() => {
+					dispatch('remove');
+				}}>Remove</button
+			>
+		<!-- </slot> -->
 	</td>
 	<td>
 		<slot name="edit_button" toggle_state={toggle_editing_state} {editing}>

@@ -22,18 +22,20 @@
 			<th>{name}</th>
 		{/each}
 	</tr>
-	{#each rows as row, index}
+	{#each rows as row, index (row)}
 		<Row
 			{columns}
 			{row}
-			remove={() => {
-				console.log('remove', row.values, index);
-				rows.splice(index, 1);
-				rows = rows;
-				//$rows = [...$rows.slice(0, index), ...$rows.slice(index + 1)];
+			on:remove={() => {
+				console.log('rows old', rows);
+
+				rows = [...rows.slice(0, index), ...rows.slice(index + 1)];
+				console.log('rows old 2', rows);
+
+				console.log('rows new', rows);
 			}}
 		>
-			<button slot="delete_button" let:remove on:click={remove}> DeleteO </button>
+			<!-- <button slot="delete_button" let:remove on:click={remove}> DeleteO </button> -->
 			<button slot="edit_button" let:toggle_state on:click={toggle_state} let:editing>
 				{editing ? 'Save' : 'Edit'}
 			</button>
