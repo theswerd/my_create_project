@@ -28,7 +28,7 @@
 			{row}
 			remove={() => {
 				console.log('remove', row.values, index);
-				rows.splice(3, 1);
+				rows.splice(index, 1);
 				rows = rows;
 				//$rows = [...$rows.slice(0, index), ...$rows.slice(index + 1)];
 			}}
