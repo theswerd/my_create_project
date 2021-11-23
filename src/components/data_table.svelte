@@ -9,6 +9,7 @@
 	export let header: string = '';
 	export let columns: Column[];
 	export let rows: RowType[] = [];
+	export let styling: string = '';
 
 	let clearRow: () => string[] = () => Array(columns.length).fill('');
 	let new_row: string[] = clearRow();
@@ -18,8 +19,8 @@
 	<caption>{header}</caption>
 
 	<tr>
-		{#each columns as { name }}
-			<th>{name}</th>
+		{#each columns as { name, custom_style }}
+			<th style={custom_style}>{name}</th>
 		{/each}
 	</tr>
 	{#each rows as row, index (row)}
@@ -42,8 +43,8 @@
 		</Row>
 	{/each}
 	<tr>
-		{#each columns as { name, valid_values }, i}
-			<td
+		{#each columns as { name, valid_values, custom_style, numeric }, i}
+			<td style={custom_style}
 				>{#if valid_values}
 					<select bind:value={new_row[i]}>
 						{#each valid_values as value}
@@ -51,7 +52,11 @@
 						{/each}
 					</select>
 				{:else}
-					<p placeholder={name} bind:innerHTML={new_row[i]} contenteditable="true" />
+					{#if numeric}
+						<input placeholder={name} bind:value={new_row[i]} type="number" />
+					{:else}
+						<input placeholder={name} bind:value={new_row[i]} />
+					{/if}
 				{/if}</td
 			>
 		{/each}
@@ -95,3 +100,29 @@
 		}
 	}}>Add row</button
 >
+
+<style>
+	table {
+		border-collapse: collapse;
+		border: 1px solid black;
+		margin: auto;
+		width: 80%;
+	}
+	caption {
+		text-align: center;
+	}
+	th {
+		border: 1px solid black;
+		padding: 10px;
+	}
+	td {
+		border: 1px solid black;
+		padding: 10px;
+	}
+	tr {
+		border: 1px solid black;
+	}
+	button {
+		margin: 10px;
+	}
+</style>

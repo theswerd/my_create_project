@@ -1,30 +1,104 @@
 <script lang="ts">
 	import DataTable from '../components/data_table.svelte';
-	import { writable } from 'svelte/store';
-	import type { person, classroom, class_people } from '../schema';
-	let class_name = '';
-	let class_desc = '';
 
-	let people: person[] = [];
-	let class_people: class_people[] = [];
-	let classes: classroom[] = [];
+	import Highlight from 'svelte-highlight';
+	import typescript from 'svelte-highlight/src/languages/typescript';
+	import github from 'svelte-highlight/src/styles/github-dark-dimmed';
+	let code =
+		"<DataTable header='Classes' \n\
+	columns={[ \n\
+		{\n\
+				name: 'Name',\n\
+				isNullable: false\n\
+			},\n\
+			{\n\
+				name: 'Description',\n\
+				isNullable: false\n\
+			},\n\
+			{\n\
+				name: 'Price',\n\
+				isNullable: false,\n\
+				numeric: true,\n\
+			}\n\
+	]}\n\
+/>";
+
+	let code2 =
+		"<DataTable \n\
+		header='Classes' \n\
+		columns={[ \n\
+			{ \n\
+				name: 'Name', \n\
+				isNullable: false, \n\
+				custom_style: 'font-weight: bold; color: blue;' \n\
+			}, \n\
+			{ \n\
+				name: 'Description', \n\
+				isNullable: false, \n\
+				custom_style: 'color: red; border-color: red;' \n\
+			}, \n\
+			{ \n\
+				name: 'Group', \n\
+				isNullable: false, \n\
+				valid_values: [ \n\
+					'Science', \n\
+					'English', \n\
+					'Math', \n\
+					'History', \n\
+					'Social Studies', \n\
+					'Art', \n\
+					'Music', \n\
+					'PE', \n\
+					'Other' \n\
+				] \n\
+			} \n\
+		]} \n\
+	/>";
 </script>
 
+<svelte:head>
+	{@html github}
+</svelte:head>
 <section>
+	<h1>Raw</h1>
+	<DataTable
+		header="Tickets"
+		columns={[
+			{
+				name: 'Name',
+				isNullable: false
+			},
+			{
+				name: 'Description',
+				isNullable: false
+			},
+			{
+				name: 'Price',
+				isNullable: false,
+				numeric: true
+			}
+		]}
+	/>
+</section>
+<Highlight {code} language={typescript} />
+<section>
+	<h1>Styled</h1>
 	<DataTable
 		header="Classes"
 		columns={[
 			{
 				name: 'Name',
 				isNullable: false,
+				custom_style: 'font-weight: bold; color: blue;'
 			},
 			{
 				name: 'Description',
-                isNullable: false,
+				isNullable: false,
+				custom_style: 'color: red; border-color: red;'
 			},
 			{
 				name: 'Group',
-                isNullable: false,
+				isNullable: false,
 				valid_values: [
 					'Science',
 					'English',
@@ -39,60 +113,5 @@
 			}
 		]}
 	/>
-	<!-- <table>
-        <caption>Classes</caption>
-
-		<tr>
-			<th> Name</th>
-			<th>Description</th>
-			<th> ID</th>
-		</tr>
-		{#each classes as { name, id, description }}
-			<tr>
-				<td>{name}</td>
-				<td>{description}</td>
-				<td>{id}</td>
-			</tr>
-		{/each}
-		<tr>
-			<td><input bind:value={class_name} placeholder="name" /></td>
-			<td><input bind:value={class_desc} placeholder="description" /></td>
-			<td
-				><button
-					on:click={() => {
-						classes = [
-							...classes,
-							{
-								name: class_name,
-								description: class_desc,
-								id: classes.length + 1
-							}
-						];
-						class_name = '';
-						class_desc = '';
-
-						console.log(classes);
-					}}
-				>
-					Add class
-				</button></td
-			>
-		</tr>
-	</table> -->
 </section>
-<section>
-	<button> Add a student </button>
-</section>
-<section>
-	<select>
-		{#each people as person}
-			<option value={person.id}>{person.name}</option>
-		{/each}
-	</select>
-	<select>
-		{#each classes as c}
-			<option value={c.id}>{c.name}</option>
-		{/each}
-	</select>
-	<button> add a student to a class </button>
-</section>
+<Highlight code={code2} language={typescript} />

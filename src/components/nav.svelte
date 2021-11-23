@@ -1,5 +1,5 @@
 <nav>
-	<p>Covid Spread Simulator</p>
+	<p>Tabular - A Modern Table Framework</p>
 </nav>
 
 <style>
